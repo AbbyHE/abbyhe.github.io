@@ -377,6 +377,9 @@ hr {
       }
 
       // Adjust font size for bigger numbers
+      @if $power == "fraction"
+
+
       @if $power >= 100 and $power < 1000 {
         font-size: 45px;
 
@@ -394,6 +397,11 @@ hr {
     }
 
     $exponent: $exponent + 1;
+  }
+
+  &.tile-fraction .tile-inner {
+    background: mix(#333, #A3D19D, 95%);
+    font-size: 45px;
   }
 
   // Super tiles (above 2048)
