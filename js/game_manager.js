@@ -62,7 +62,7 @@ GameManager.prototype.addRandomTile = function () {
     //var value = Math.random() < 0.9 ? 2 : -2;
     var value;
     var rand = Math.random();
-    if (rand < 0.23) value = 0.5;
+    if (rand < 0.5) value = 0.5;
     else if (rand < 0.9) value = 2; 
     else value = 4;
     var tile = new Tile(this.grid.randomAvailableCell(), value);
@@ -136,9 +136,9 @@ GameManager.prototype.move = function (direction) {
              
             merged.mergedFrom = [tile, next];
 
-            self.grid.insertTile(merged);
             self.grid.removeTile(tile);
-
+            self.grid.insertTile(merged);
+            
             // Converge the two tiles' positions
             tile.updatePosition(positions.next);
 
@@ -240,6 +240,9 @@ GameManager.prototype.tileMatchesAvailable = function () {
       tile = this.grid.cellContent({ x: x, y: y });
 
       if (tile) {
+        
+        if (tile.value < 1) return true; //if there are tiles with fraction
+        
         for (var direction = 0; direction < 4; direction++) {
           var vector = self.getVector(direction);
           var cell   = { x: x + vector.x, y: y + vector.y };
